@@ -8,41 +8,43 @@ import {
   CardContent,
   Container,
   IconButton,
+  ButtonGroup,
+  Button,
 } from '@mui/material'
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { AuthContext } from './context'
-import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
-import { removeItem } from '../redux/actions';
+import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart'
+import AddCircleIcon from '@mui/icons-material/AddCircle'
+import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline'
+import { removeItem } from '../redux/actions'
 import Dialogs from './dialog'
 
 const Cart = () => {
   const { setBadge } = useContext(AuthContext)
+  const dispatch = useDispatch()
+  const [quantities, setQuantities] = useState({}) // Use an object to store quantities for each item
+  const [disabled, setDisable] = useState({}) // Use an object to store disable state for each item
 
-  const dispatch = useDispatch();
   let cartItems = useSelector((state) => state.cartItems)
   cartItems = cartItems.filter((item, index, self) => {
-    return (
-      index === self.findIndex((t) => t.id === item.id && t.name === item.name)
-    )
+    return index === self.findIndex((t) => t.id === item.id)
   })
-
   setBadge(cartItems.length)
 
   const handleClick = (index) => {
     dispatch(removeItem(index))
-    setBadge(cartItems.length);
-  } 
+    setBadge(cartItems.length)
+  }
 
-  //placing items in start 
+  // placing items in start
   useEffect(() => {
     document.body.style.placeItems = 'start'
   }, [])
-
+  
   if (cartItems.length === 0) {
     return (
-      <Box sx={{placeItems:'center'}}>
-        <Typography variant='h2'>Shopping Cart</Typography>
+      <Box sx={{ placeItems: 'center' }}>
+        <Typography variant="h2">Shopping Cart</Typography>
         <Dialogs openS={true} />
       </Box>
     )
@@ -56,58 +58,122 @@ const Cart = () => {
         direction={'row'}
         columnSpacing={6}
         rowSpacing={2}
-        sx={{ marginBottom: '20px',width: '100vw' }}
+        sx={{ marginBottom: '20px', width: '100vw' }}
       >
-        {cartItems.map((items,index) => (
-          <Grid item key={index} xs={12} sm={6} md={4} lg={3}>
-            <Card
-              sx={{
-                width: '100%',
-                height: '100%',
-                transition: 'transform 0.3s',
-                '&:hover': { transform: 'scale(1.05)' },
-                // backgroundColor: '#bbc0bb',
-              }}
-            >
-              <CardMedia
-                component={'img'}
-                image={items.image_url}
-                alt={items.name}
-                height={160}
-              />
-              <CardContent>
-                <Box
-                  display={'flex'}
-                  flexDirection={'column'}
-                  justifyContent={'center'}
-                  alignItems={'center'}
-                >
-                  <Box paddingBottom={'15px'}>
-                    <Typography variant="h4">{items.name}</Typography>
-                  <Typography variant="h6">₹{items.price} per kg</Typography>
-                    {/* <Typography variant="body1">{items.description}</Typography> */}
-                  </Box>
+        {cartItems.map((items, index) => {
+          const quantity = quantities[items.id] || 1
+          const isDisabled = disabled[items.id] || false
+
+          return (
+            <Grid item key={index} xs={12} sm={6} md={4} lg={3}>
+              <Card
+                sx={{
+                  width: '100%',
+                  height: '100%',
+                }}
+              >
+                <CardMedia
+                  component={'img'}
+                  image={items.image_url}
+                  alt={items.name}
+                  height={160}
+                />
+                <CardContent>
                   <Box
                     display={'flex'}
-                    justifyContent={'space-between'}
+                    flexDirection={'column'}
+                    justifyContent={'center'}
                     alignItems={'center'}
-                    sx={{ width: '100%' }}
+                    borderBottom={'2px'}
                   >
-                    <IconButton onClick={() => {handleClick(index)}}>
-                      <RemoveShoppingCartIcon />
-                    </IconButton>
-                    <IconButton onClick={() => {}}>
-                      <AddCircleIcon />
-                    </IconButton>
-                    <Typography variant="body2">
-                      Available Stock: {items.stock}
-                    </Typography>
+                    <Box paddingBottom={'15px'}>
+                      <Typography variant="h4">{items.name}</Typography>
+                      <Typography variant="h6">
+                        ₹{items.price} per kg
+                      </Typography>
+                      {/* <Typography variant="body1">{items.description}</Typography> */}
+                    </Box>
+                    <Box
+                      display={'flex'}
+                      justifyContent={'space-evenly'}
+                      alignItems={'center'}
+                      sx={{ width: '100%' }}
+                    >
+                      <IconButton
+                        onClick={() => {
+                          handleClick(index)
+                        }}
+                        sx={{
+                          transition: 'transform 0.3s',
+                          '&:hover': { transform: 'scale(1.05)' },
+                          '&:focus': { outline: 'none' },
+                        }}
+                      >
+                        <RemoveShoppingCartIcon />
+                        <Typography variant="h6">Remove</Typography>
+                      </IconButton>
+                      <Typography variant="body2">
+                        Available Stock: {items.stock}
+                      </Typography>
+                    </Box>
+
+                    <Box
+                      display={'flex'}
+                      justifyContent={'space-evenly'}
+                      alignItems={'center'}
+                      sx={{ width: '100%' }}
+                    >
+                      <Typography vaariant="h6">
+                        Quantity : {quantity}
+                      </Typography>
+                      <ButtonGroup variant="text">
+                        <Button
+                          onClick={() => {
+                            setQuantities((prevQuantities) => ({
+                              ...prevQuantities,
+                              [items.id]: quantity + 1,
+                            }))
+                            setDisable((prevDisabled) => ({
+                              ...prevDisabled,
+                              [items.id]: false,
+                            }))
+                          }}
+                          sx={{
+                            color: '#00693e',
+                            '&:focus': { outline: 'none' },
+                          }}
+                        >
+                          <AddCircleIcon />
+                        </Button>
+                        <Button
+                          disabled={isDisabled}
+                          onClick={() => {
+                            if (quantity <= 2) {
+                              setDisable((prevDisabled) => ({
+                                ...prevDisabled,
+                                [items.id]: true,
+                              }))
+                            }
+                            setQuantities((prevQuantities) => ({
+                              ...prevQuantities,
+                              [items.id]: quantity - 1,
+                            }))
+                          }}
+                          sx={{
+                            color: '#00693e',
+                            '&:focus': { outline: 'none' },
+                          }}
+                        >
+                          <RemoveCircleOutlineIcon />
+                        </Button>
+                      </ButtonGroup>
+                    </Box>
                   </Box>
-                </Box>
-              </CardContent>
-            </Card>
-          </Grid>
-        ))}
+                </CardContent>
+              </Card>
+            </Grid>
+          )
+        })}
       </Grid>
     </Container>
   )

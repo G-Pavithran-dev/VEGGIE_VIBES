@@ -65,9 +65,11 @@ const Navbar = () => {
                   </StyledBadge>
                 </Link>
                 {isLoggedIn ? (
-                  <Avatar>
-                    <PersonIcon />
-                  </Avatar>
+                  <Link to="/profile">
+                    <Avatar>
+                      <PersonIcon />
+                    </Avatar>
+                  </Link>
                 ) : (
                   <Link to="/login" className="log">
                     Login

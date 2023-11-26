@@ -93,7 +93,7 @@ export default function Vegetables() {
                       }}
                       sx={{
                         transition: 'transform 0.3s',
-                        '&:hover': { transform: 'scale(3)', border: '0px' },
+                        '&:hover': { transform: 'scale(2)', border: '0px' },
                         '&:focus': { outline: 'none' },
                       }}
                     >

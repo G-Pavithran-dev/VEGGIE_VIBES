@@ -1,25 +1,20 @@
 import * as React from 'react'
-import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
 import CssBaseline from '@mui/material/CssBaseline'
 import TextField from '@mui/material/TextField'
-import FormControlLabel from '@mui/material/FormControlLabel'
-import Checkbox from '@mui/material/Checkbox'
-import Link from '@mui/material/Link'
 import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import { Snackbar, Alert } from '@mui/material'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
-import { useNavigate } from 'react-router-dom'
+import { AuthContext } from './context'
 import axios from 'axios'
 
 const defaultTheme = createTheme()
 
-export default function SignUp() {
-  const navigate = useNavigate()
+export default function AccountSetting() {
+  const { logData } = React.useContext(AuthContext)
   const [details, setDetails] = React.useState({
     username: '',
     email: '',
@@ -39,25 +34,14 @@ export default function SignUp() {
   const [open, setOpen] = React.useState(false)
   const [Erropen, setErrOpen] = React.useState(false)
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault()
-    if (details.password !== details.passwordConfirm) {
-      setErrOpen(true)
-      return
+    try {
+      const response = await axios.put('http://localhost:3001/Users/1', logData)
+      console.log(response.data)
+    } catch (error) {
+      console.error('Error updating data', error)
     }
-    axios
-      .post('http://localhost:3001/Users', details)
-      .then((response) => {
-        console.log('Success:', response.data)
-        setOpen(true)
-        setTimeout(() => {
-          navigate('/login')
-        }, 2000)
-      })
-      .catch((error) => {
-        console.error('Error:', error)
-        alert('Error in signup')
-      })
   }
 
   const handleInputChange = (event) => {
@@ -82,7 +66,6 @@ export default function SignUp() {
             placeItems: 'center',
           }}
           component="main"
-          maxWidth="sm"
           sx={{
             borderRadius: '30px',
             paddingButtom: '30px',
@@ -117,12 +100,6 @@ export default function SignUp() {
                 Invalid Credentials
               </Alert>
             </Snackbar>
-            <Avatar sx={{ m: 1, bgcolor: '#00693e' }}>
-              <LockOutlinedIcon />
-            </Avatar>
-            <Typography component="h1" variant="h5">
-              Register Form
-            </Typography>
             <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
@@ -135,6 +112,7 @@ export default function SignUp() {
                     label="User Name"
                     autoFocus
                     onChange={handleInputChange}
+                    defaultValue={logData.username}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -146,6 +124,7 @@ export default function SignUp() {
                     name="name"
                     autoComplete="family-name"
                     onChange={handleInputChange}
+                    defaultValue={logData.name}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -155,33 +134,10 @@ export default function SignUp() {
                     id="email"
                     label="Email Address"
                     name="email"
-                    type='email'
+                    type="email"
                     autoComplete="email"
                     onChange={handleInputChange}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    required
-                    fullWidth
-                    name="password"
-                    label="Password"
-                    type="password"
-                    id="password"
-                    autoComplete="new-password"
-                    onChange={handleInputChange}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    required
-                    fullWidth
-                    name="passwordConfirm"
-                    label="Confirm Password"
-                    type="password"
-                    id="Confirmpassword"
-                    autoComplete="Confirmpassword"
-                    onChange={handleInputChange}
+                    defaultValue={logData.email}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -199,6 +155,7 @@ export default function SignUp() {
                     id="doorno"
                     autoComplete="doorno"
                     onChange={handleInputChange}
+                    defaultValue={logData.doorno}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -211,6 +168,7 @@ export default function SignUp() {
                     id="street"
                     autoComplete="street"
                     onChange={handleInputChange}
+                    defaultValue={logData.street}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -223,6 +181,7 @@ export default function SignUp() {
                     id="city"
                     autoComplete="city"
                     onChange={handleInputChange}
+                    defaultValue={logData.city}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -234,6 +193,7 @@ export default function SignUp() {
                     id="landmark"
                     autoComplete="landmark"
                     onChange={handleInputChange}
+                    defaultValue={logData.landmark}
                   />
                 </Grid>
                 <Grid item xs={12} sm={12}>
@@ -246,6 +206,7 @@ export default function SignUp() {
                     id="address1"
                     autoComplete="address1"
                     onChange={handleInputChange}
+                    defaultValue={logData.address1}
                   />
                 </Grid>
                 <Grid item xs={12} sm={12}>
@@ -257,6 +218,7 @@ export default function SignUp() {
                     id="address2"
                     autoComplete="address2"
                     onChange={handleInputChange}
+                    defaultValue={logData.address2}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -269,6 +231,7 @@ export default function SignUp() {
                     id="mobilenumber"
                     autoComplete="mobilenumber"
                     onChange={handleInputChange}
+                    defaultValue={logData.mobilenumber}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -281,30 +244,20 @@ export default function SignUp() {
                     id="pincode"
                     autoComplete="pincode"
                     onChange={handleInputChange}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <FormControlLabel
-                    control={
-                      <Checkbox value="allowExtraEmails" color="primary" />
-                    }
-                    label="Accept our terms and conditions"
+                    defaultValue={logData.pincode}
                   />
                 </Grid>
               </Grid>
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2, bgcolor: '#00693e' }}
-              >
-                Sign Up
-              </Button>
               <Grid container justifyContent="flex-end">
-                <Grid item sx={{marginBottom:'20px'}}>
-                  <Link href="/login" variant="body2" sx={{ color: '#00693e' }}>
-                    Already have an account? Sign in
-                  </Link>
+                <Grid item>
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    sx={{ mt: 3, mb: 2, bgcolor: '#00693e' }}
+                    onClick={{ alert: 'Confirm Changes' }}
+                  >
+                    Save Changes
+                  </Button>
                 </Grid>
               </Grid>
             </Box>

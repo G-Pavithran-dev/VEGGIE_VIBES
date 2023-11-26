@@ -10,6 +10,8 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { Link } from '@mui/material'
+import { useContext } from 'react'
+import { AuthContext } from './context'
 
 const cardsContent = [
   {
@@ -35,7 +37,8 @@ const cardsContent = [
 const defaultTheme = createTheme()
 
 export default function Home() {
-
+  const { setIsProfile } = useContext(AuthContext)
+  setIsProfile(false)
   return (
     <ThemeProvider theme={defaultTheme}>
       <CssBaseline />

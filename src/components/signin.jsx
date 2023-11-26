@@ -54,7 +54,7 @@ export default function SignIn() {
       setOpen(true)
       setLogData(user);
       setTimeout(() => {
-        navigateTo('/profile')
+        navigateTo('/products')
       }, 2000)
     } else {
       setErrOpen(true);
@@ -74,7 +74,7 @@ export default function SignIn() {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            backgroundColor: '#fffb',
+            background: 'rgb(255 255 255 / 76%)',
             boxShadow: '0 0 100px #00693e',
             position: 'absolute',
             top: '50%',
@@ -104,7 +104,7 @@ export default function SignIn() {
               Invalid Credentials
             </Alert>
           </Snackbar>
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          <Avatar sx={{ m: 1, bgcolor: '#00693e' }}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
@@ -141,7 +141,7 @@ export default function SignIn() {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+              sx={{ mt: 3, mb: 2, bgcolor: '#00693e' }}
             >
               Sign In
             </Button>
