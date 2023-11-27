@@ -25,7 +25,7 @@ export default function SignIn() {
   const [open, setOpen] = useState(false)
   const [Erropen, setErrOpen] = useState(false);
 
-  const { setIsLoggedIn, setLogData } = useContext(AuthContext)
+  const { setIsLoggedIn, setLogData, setIsProfile } = useContext(AuthContext)
   const [data, setData] = useState([])
   const [inDetails, setInDetails] = useState({
     email: '',
@@ -53,9 +53,8 @@ export default function SignIn() {
       setIsLoggedIn(true)
       setOpen(true)
       setLogData(user);
-      setTimeout(() => {
-        navigateTo('/products')
-      }, 2000)
+      setIsProfile(true)
+      navigateTo('/products')
     } else {
       setErrOpen(true);
     }

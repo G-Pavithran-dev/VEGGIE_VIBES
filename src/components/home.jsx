@@ -138,8 +138,11 @@ export default function Home() {
           ))}
         </Grid>
       </Container>
-      <Box sx={{ p: 0 }} component="footer">
-        <Typography variant="h4" align="center" gutterBottom>
+      <Box
+        sx={{ p: 0, width: '98.9vw', background: '#bbc0bb' }}
+        component="footer"
+      >
+        <Typography variant="h5" align="center" gutterBottom>
           Fresh Picks, Fast Clicks: Your Farm-to-Table Connection in a Single
           App!
         </Typography>
@@ -148,44 +151,49 @@ export default function Home() {
           align="center"
           color="text.secondary"
           component="p"
+        ></Typography>
+        <Box
+          sx={{
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'space-around',
+            backgroundColor: '#bbc0bb',
+            // flexDirection: 'column',
+          }}
         >
-        </Typography>
           <Box
-            sx={{
-              width: '100%',
-              display: 'flex',
-              justifyContent: 'space-around',
-              backgroundColor: '#bbc0bb'
-            }}
+            display={'flex'}
+            flexDirection={'column'}
+            justifyContent={'center'}
+            alignItems={'center'}
           >
-            <Box
-              display={'flex'}
-              flexDirection={'column'}
-              justifyContent={'center'}
-              alignItems={'center'}
-            >
-              <img src="/images/food_safety.png" width={'70px'}></img>
-              <p>Food safety is ensured</p>
-            </Box>
-            <Box
-              display={'flex'}
-              flexDirection={'column'}
-              justifyContent={'center'}
-              alignItems={'center'}
-            >
-              <img src="/images/fssai.png" width={'70px'}></img>
-              <p>fssai approved</p>
-            </Box>
-            <Box
-              display={'flex'}
-              flexDirection={'column'}
-              justifyContent={'center'}
-              alignItems={'center'}
-            >
-              <img src="/images/organic.png" width={'70px'}></img>
-              <p>100% Natural and organic</p>
-            </Box>
+            <img src="/images/food_safety.png" width={'70px'}></img>
+            <p>Food safety is ensured</p>
           </Box>
+          <Box
+            display={'flex'}
+            flexDirection={'column'}
+            justifyContent={'center'}
+            alignItems={'center'}
+          >
+            <img src="/images/fssai.png" width={'70px'}></img>
+            <p>FSSAI approved</p>
+          </Box>
+          <Box
+            display={'flex'}
+            flexDirection={'column'} 
+            justifyContent={'center'}
+            alignItems={'center'}
+          >
+            <img src="/images/organic.png" width={'70px'}></img>
+            <p>100% Natural and organic</p>
+          </Box>
+        </Box>
+        <Box bgcolor={'#bbc0bb'} m={0}>
+          <Typography variant="h6" align="center" gutterBottom>
+            © 2023 VeggieVibes. All rights reserved.
+          </Typography>
+        </Box>
       </Box>
     </ThemeProvider>
   )

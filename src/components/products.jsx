@@ -9,8 +9,12 @@ import {
 import Box from '@mui/material/Box'
 import '../styles/product.css'
 import { Link } from 'react-router-dom'
+import { useContext } from 'react'
+import { AuthContext } from './context'
 
 export default function Products() {
+
+  const { isProfile } = useContext(AuthContext);
   const Products = [
     {
       id: 1,
@@ -53,10 +57,10 @@ export default function Products() {
         alignItems={'center'}
         sx={{ marginY: '5rem', padding: '0px' }}
       >
-        <Typography variant="h2" color={'white'}>
+        <Typography variant="h2" color={isProfile ? 'black' : 'white'}>
           Products Section
         </Typography>
-        <Typography variant="h4" color={'whitesmoke'}>
+        <Typography variant="h4" color={isProfile ? 'black' : 'whitesmoke'}>
           PickUp your products
         </Typography>
       </Box>
@@ -68,23 +72,23 @@ export default function Products() {
         sx={{ margin: 0 }}
       >
         {Products.map((items) => (
-          <Grid item key={items.id} xs={4} sx={{ width: '350px' }}>
+          <Grid item key={items.id} xs={4} md={3} lg={4} xl={4}>
             <Link to={items.link}>
-              <Card>
-                  <CardMedia
-                    component="img"
-                    height="240"
-                    image={items.image}
-                    alt={items.alt}
-                  />
-                  <CardContent>
-                    <Typography gutterBottom variant="h4" component="div">
-                      {items.name}
-                    </Typography>
-                    <Typography variant="body1" color="text.secondary">
-                      {items.description}
-                    </Typography>
-                  </CardContent>
+              <Card sx={{ width: '100%', height: '100%' }}>
+                <CardMedia
+                  component="img"
+                  height="240"
+                  image={items.image}
+                  alt={items.alt}
+                />
+                <CardContent>
+                  <Typography gutterBottom variant="h4" component="div">
+                    {items.name}
+                  </Typography>
+                  <Typography variant="body1" color="text.secondary">
+                    {items.description}
+                  </Typography>
+                </CardContent>
               </Card>
             </Link>
           </Grid>

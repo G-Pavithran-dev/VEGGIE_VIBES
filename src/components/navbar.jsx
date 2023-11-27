@@ -1,19 +1,19 @@
-import { useContext } from 'react';
-import { AuthContext } from './context';
-import '../styles/home.css';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
+import { useContext } from 'react'
+import { AuthContext } from './context'
+import '../styles/home.css'
+import AppBar from '@mui/material/AppBar'
+import Box from '@mui/material/Box'
+import Toolbar from '@mui/material/Toolbar'
 // import IconButton from '@mui/material/IconButton';
-import Badge from '@mui/material/Badge';
-import { styled } from '@mui/material/styles';
-import { Link } from 'react-router-dom';
-import { Avatar, Container } from '@mui/material';
-import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
-import PersonIcon from '@mui/icons-material/Person';
+import Badge from '@mui/material/Badge'
+import { styled } from '@mui/material/styles'
+import { Link } from 'react-router-dom'
+import { Avatar, Container,Button } from '@mui/material'
+import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout'
+import PersonIcon from '@mui/icons-material/Person'
 
 const Navbar = () => {
-  const { isLoggedIn, badge } = useContext(AuthContext);
+  const { isLoggedIn, badge, setIsProfile } = useContext(AuthContext)
   return (
     <div>
       <Container maxWidth="xl" sx={{ flexGrow: 1, marginBottom: '80px' }}>
@@ -65,11 +65,11 @@ const Navbar = () => {
                   </StyledBadge>
                 </Link>
                 {isLoggedIn ? (
-                  <Link to="/profile">
+                  <Button onClick={()=>{setIsProfile(true)}}>
                     <Avatar>
                       <PersonIcon />
                     </Avatar>
-                  </Link>
+                  </Button>
                 ) : (
                   <Link to="/login" className="log">
                     Login
@@ -82,7 +82,7 @@ const Navbar = () => {
       </Container>
     </div>
   )
-};
+}
 
 const StyledBadge = styled(Badge)(() => ({
   '& .MuiBadge-badge': {
@@ -91,6 +91,6 @@ const StyledBadge = styled(Badge)(() => ({
     border: '2px solid black',
     padding: '0 4px',
   },
-}));
+}))
 
-export default Navbar;
+export default Navbar

@@ -18,12 +18,15 @@ import AddCircleIcon from '@mui/icons-material/AddCircle'
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline'
 import { removeItem } from '../redux/actions'
 import Dialogs from './dialog'
+import { useNavigate } from 'react-router-dom'
 
 const Cart = () => {
-  const { setBadge } = useContext(AuthContext)
+  const { setBadge, isLoggedIn } = useContext(AuthContext)
   const dispatch = useDispatch()
-  const [quantities, setQuantities] = useState({}) // Use an object to store quantities for each item
-  const [disabled, setDisable] = useState({}) // Use an object to store disable state for each item
+  const navigate = useNavigate()
+  const [quantities, setQuantities] = useState({})
+  const [disabled, setDisable] = useState({})
+  const [price, setPrice] = useState(0)
 
   let cartItems = useSelector((state) => state.cartItems)
   cartItems = cartItems.filter((item, index, self) => {
@@ -40,7 +43,7 @@ const Cart = () => {
   useEffect(() => {
     document.body.style.placeItems = 'start'
   }, [])
-  
+
   if (cartItems.length === 0) {
     return (
       <Box sx={{ placeItems: 'center' }}>
@@ -137,6 +140,7 @@ const Cart = () => {
                               ...prevDisabled,
                               [items.id]: false,
                             }))
+                            setPrice(price + items.price)
                           }}
                           sx={{
                             color: '#00693e',
@@ -175,6 +179,51 @@ const Cart = () => {
           )
         })}
       </Grid>
+      <Box
+        display={'flex'}
+        justifyContent={'center'}
+        alignItems={'center'}
+        flexDirection={'column'}
+        sx={{ bgColor: '#0693e', color: 'yellow' }}
+      >
+        {/* <Typography
+          variant="h4"
+          gutterBottom
+        >
+          Total Price of Cart : {price}
+        </Typography> */}
+        {isLoggedIn ? (
+          <Button
+            variant="contained"
+            size="large"
+            sx={{
+              backgroundColor: 'White',
+              color: '#00693e',
+              '&:hover': { backgroundColor: 'white' },
+            }}
+            onClick={() => {
+              navigate('/checkout')
+            }}
+          >
+            Checkout
+          </Button>
+        ) : (
+          <Button
+            variant="contained"
+            size="large"
+            sx={{
+              backgroundColor: 'White',
+              color: '#00693e',
+              '&:hover': { backgroundColor: 'white' },
+            }}
+            onClick={() => {
+              navigate('/login')
+            }}
+          >
+            Login to Checkout
+          </Button>
+        )}
+      </Box>
     </Container>
   )
 }

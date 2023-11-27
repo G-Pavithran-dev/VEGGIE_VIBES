@@ -39,6 +39,7 @@ export default function AccountSetting() {
     try {
       const response = await axios.put('http://localhost:3001/Users/1', logData)
       console.log(response.data)
+      setOpen(true)
     } catch (error) {
       console.error('Error updating data', error)
     }
@@ -48,24 +49,20 @@ export default function AccountSetting() {
     setDetails({ ...details, [event.target.name]: event.target.value })
   }
 
+  // React.useEffect(() => {
+  //   if (isProfile) {
+  //     document.body.style.background = 'white'
+  //   }
+  // },[isProfile])
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Box
-        width={'98vw'}
-        display={'flex'}
-        justifyContent={'center'}
-        alignItems={'center'}
-        height={'100%'}
-        p={4}
-        pb={8}
-      >
+      <Box width={'98vw'} m={0} height={'100%'} pb={8}>
         <Container
           style={{
             backgroundColor: 'rgb(255 255 255 / 76%)',
             boxShadow: '0 0 100px #00693e',
             placeItems: 'center',
           }}
-          component="main"
           sx={{
             borderRadius: '30px',
             paddingButtom: '30px',
@@ -87,7 +84,7 @@ export default function AccountSetting() {
               onClose={() => setOpen(false)}
             >
               <Alert severity="success" sx={{ width: '100%' }}>
-                Signup Successful
+                Saved Changes Successful
               </Alert>
             </Snackbar>
             <Snackbar
@@ -102,6 +99,11 @@ export default function AccountSetting() {
             </Snackbar>
             <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
               <Grid container spacing={2}>
+                <Grid item xs={12} sm={12}>
+                  <Typography component="h1" variant="h5" sx={{ p: 0 }}>
+                    Account Settings
+                  </Typography>
+                </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextField
                     autoComplete="given-name"
