@@ -7,13 +7,14 @@ import Toolbar from '@mui/material/Toolbar'
 // import IconButton from '@mui/material/IconButton';
 import Badge from '@mui/material/Badge'
 import { styled } from '@mui/material/styles'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Avatar, Container,Button } from '@mui/material'
 import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout'
 import PersonIcon from '@mui/icons-material/Person'
 
 const Navbar = () => {
   const { isLoggedIn, badge, setIsProfile } = useContext(AuthContext)
+  const navigate = useNavigate();
   return (
     <div>
       <Container maxWidth="xl" sx={{ flexGrow: 1, marginBottom: '80px' }}>
@@ -43,8 +44,11 @@ const Navbar = () => {
                 <Link to="/products" className="link">
                   Products
                 </Link>
-                <Link to="/orders" className="link">
-                  Orders
+                <Link to="/about" className="link">
+                  About us
+                </Link>
+                <Link to="/contact" className='link'>
+                  Contact us
                 </Link>
               </Box>
               <Box
@@ -65,7 +69,7 @@ const Navbar = () => {
                   </StyledBadge>
                 </Link>
                 {isLoggedIn ? (
-                  <Button onClick={()=>{setIsProfile(true)}}>
+                  <Button onClick={()=>{navigate('/accountSettings');setIsProfile(true)}}>
                     <Avatar>
                       <PersonIcon />
                     </Avatar>

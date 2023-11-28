@@ -16,19 +16,19 @@ const defaultTheme = createTheme()
 export default function AccountSetting() {
   const { logData } = React.useContext(AuthContext)
   const [details, setDetails] = React.useState({
-    username: '',
-    email: '',
-    password: '',
-    passwordConfirm: '',
-    name: '',
-    doorno: '',
-    street: '',
-    city: '',
-    landmark: '',
-    address1: '',
-    address2: '',
-    mobilenumber: '',
-    pincode: '',
+    username: logData.username,
+    email: logData.email,
+    password: logData.password,
+    passwordConfirm: logData.passwordConfirm,
+    name: logData.name,
+    doorno: logData.doorno,
+    street: logData.street,
+    city: logData.city,
+    landmark: logData.landmark,
+    address1: logData.address1,
+    address2: logData.address2,
+    mobilenumber: logData.mobilenumber,
+    pincode: logData.pincode,
   })
 
   const [open, setOpen] = React.useState(false)
@@ -37,7 +37,7 @@ export default function AccountSetting() {
   const handleSubmit = async (event) => {
     event.preventDefault()
     try {
-      const response = await axios.put('http://localhost:3001/Users/1', logData)
+      const response = await axios.put('http://localhost:3001/Users/1', details)
       console.log(response.data)
       setOpen(true)
     } catch (error) {

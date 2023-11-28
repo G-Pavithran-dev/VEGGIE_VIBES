@@ -14,21 +14,23 @@ import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import '../styles/home.css'
 import Badge from '@mui/material/Badge'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Avatar } from '@mui/material'
 import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout'
 import AccountBoxIcon from '@mui/icons-material/AccountBox'
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts'
+import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew'
 import PersonIcon from '@mui/icons-material/Person'
 
 // const drawerWidth = 0
 
 export default function Profile() {
-  const { badge, isLoggedIn, setIsProfile } = useContext(AuthContext)
+  const { badge, isLoggedIn, setIsProfile, setIsLoggedIn } = useContext(AuthContext)
   const [isHover, setHover] = useState(false)
   const [drawerWidth, setDrawerWidth] = useState(65)
   setIsProfile(true)
 
+  const navigate = useNavigate();
   const Account = [
     {
       id: 1,
@@ -38,7 +40,7 @@ export default function Profile() {
     },
     {
       id: 2,
-      text: 'Account Information',
+      text: 'Account Settings',
       icon: <ManageAccountsIcon />,
       link: '/accountSetting',
     },
@@ -103,11 +105,11 @@ export default function Profile() {
                   height={'50px'}
                 />
               </Link>
-              <Link to="/products" className="link">
-                Products
+              <Link to="/about" className="link">
+                About
               </Link>
-              <Link to="/orders" className="link">
-                Orders
+              <Link to="/contact" className="link">
+                Contact
               </Link>
             </Box>
             <Box
@@ -117,11 +119,16 @@ export default function Profile() {
               width={'10vw'}
             >
               {isLoggedIn ? (
-                <Link to="/profile">
-                  <Avatar>
+                <Link>
+                  <Avatar
+                    onClick={() => {
+                      navigate('/accountSetting')
+                      setIsProfile(true)
+                    }}
+                  >
                     <PersonIcon />
                   </Avatar>
-                </Link>
+                  </Link>
               ) : (
                 <Link to="/login" className="log">
                   Login
@@ -222,22 +229,48 @@ export default function Profile() {
               <Link to={item.link}>
                 <ListItemButton>
                   <ListItemIcon sx={{ color: !isHover ? 'white' : '#00693e' }}>
-                    { isHover ? <img
-                      src={item.hover_icon}
-                      alt={item.text}
-                      width={'30px'}
-                      height={'30px'}
-                      /> : 
+                    {isHover ? (
                       <img
-                      src={item.icon}
-                      alt={item.text}
-                      width={'30px'}
-                      height={'30px'}
-                    />}
+                        src={item.hover_icon}
+                        alt={item.text}
+                        width={'30px'}
+                        height={'30px'}
+                      />
+                    ) : (
+                      <img
+                        src={item.icon}
+                        alt={item.text}
+                        width={'30px'}
+                        height={'30px'}
+                      />
+                    )}
                   </ListItemIcon>
                   {isHover && <ListItemText primary={item.text} />}
                 </ListItemButton>
               </Link>
+            </ListItem>
+          ))}
+        </List>
+        <Divider sx={{ backgroundColor: !isHover ? 'white' : '#00693e' }} />
+        <List>
+          {['Logout'].map((item) => (
+            <ListItem key={item} disablePadding>
+              <ListItemButton
+                onClick={() => {
+                  setIsLoggedIn(false)
+                  setIsProfile(false)
+                  navigate('/')
+                }}
+              >
+                <ListItemIcon sx={{ color: !isHover ? 'white' : '#00693e' }}>
+                  {isHover ? (
+                    <PowerSettingsNewIcon color="error" />
+                  ) : (
+                    <PowerSettingsNewIcon color="white" />
+                  )}
+                </ListItemIcon>
+                {isHover && <ListItemText primary="Logout" />}
+              </ListItemButton>
             </ListItem>
           ))}
         </List>

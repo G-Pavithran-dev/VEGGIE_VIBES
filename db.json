@@ -236,20 +236,36 @@
   ],
   "Users": [
     {
-      "username": "PavithranG",
+      "username": "Pavithran",
       "email": "22it123@skcet.ac.in",
       "password": "12345678",
       "passwordConfirm": "12345678",
       "name": "Pavithran G",
-      "doorno": "7-1-59/1",
+      "doorno": "7",
       "street": "Kuniyamuthur",
       "city": "Coimbatore",
       "landmark": "SKCET",
       "address1": "HOR MEN, Sri Krishna College of Engineering and Technology",
-      "address2": "Kuniyamuthur,Coimbatore",
-      "monilenumber": "8760000701",
+      "address2": "Kuniyamuthur, Coimbatore",
+      "mobilenumber": "8760000701",
       "pincode": "641008",
       "id": 1
+    },
+    {
+      "username": "NambuAjai",
+      "email": "727722euit115@skcet.ac.in",
+      "password": "12345678",
+      "passwordConfirm": "12345678",
+      "name": "Nambu Ajai N",
+      "doorno": "4",
+      "street": "Mandapam",
+      "city": "Rameshwaram",
+      "landmark": "Pamban",
+      "address1": "Nambu villa,Mandapam",
+      "address2": "Rameshwaram",
+      "mobilenumber": "8525959651",
+      "pincode": "623518",
+      "id": 2
     }
   ]
 }

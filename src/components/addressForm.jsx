@@ -1,109 +1,113 @@
 import * as React from 'react';
+import { AuthContext } from './context';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 
 export default function AddressForm() {
+  const { logData } = React.useContext(AuthContext);
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
         Shipping address
       </Typography>
-      <Grid container spacing={3}>
+      <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
           <TextField
             required
-            id="firstName"
-            name="firstName"
-            label="First name"
             fullWidth
-            autoComplete="given-name"
-            variant="standard"
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="lastName"
-            name="lastName"
-            label="Last name"
-            fullWidth
-            autoComplete="family-name"
-            variant="standard"
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            required
-            id="address1"
-            name="address1"
-            label="Address line 1"
-            fullWidth
-            autoComplete="shipping address-line1"
-            variant="standard"
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            id="address2"
-            name="address2"
-            label="Address line 2"
-            fullWidth
-            autoComplete="shipping address-line2"
-            variant="standard"
+            name="doorno"
+            label="Door / Flat no"
+            type="text"
+            id="doorno"
+            autoComplete="doorno"
+            defaultValue={logData.doorno}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
             required
-            id="city"
+            fullWidth
+            name="street"
+            label="Street Name"
+            type="text"
+            id="street"
+            autoComplete="street"
+            defaultValue={logData.street}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            required
+            fullWidth
             name="city"
-            label="City"
-            fullWidth
-            autoComplete="shipping address-level2"
-            variant="standard"
+            label="City / Village Name"
+            type="text"
+            id="city"
+            autoComplete="city"
+            defaultValue={logData.city}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-            id="state"
-            name="state"
-            label="State/Province/Region"
             fullWidth
-            variant="standard"
+            name="landmark"
+            label="Land Mark (optional)"
+            type="text"
+            id="landmark"
+            autoComplete="landmark"
+            defaultValue={logData.landmark}
+          />
+        </Grid>
+        <Grid item xs={12} sm={12}>
+          <TextField
+            required
+            fullWidth
+            name="address1"
+            label="Address Line 1"
+            type="text"
+            id="address1"
+            autoComplete="address1"
+            defaultValue={logData.address1}
+          />
+        </Grid>
+        <Grid item xs={12} sm={12}>
+          <TextField
+            fullWidth
+            name="address2"
+            label="Address Line 2"
+            type="text"
+            id="address2"
+            autoComplete="address2"
+            defaultValue={logData.address2}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
             required
-            id="zip"
-            name="zip"
-            label="Zip / Postal code"
             fullWidth
-            autoComplete="shipping postal-code"
-            variant="standard"
+            name="mobilenumber"
+            label="Mobile Number"
+            type="tel"
+            id="mobilenumber"
+            autoComplete="mobilenumber"
+            defaultValue={logData.mobilenumber}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
             required
-            id="country"
-            name="country"
-            label="Country"
             fullWidth
-            autoComplete="shipping country"
-            variant="standard"
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <FormControlLabel
-            control={<Checkbox color="secondary" name="saveAddress" value="yes" />}
-            label="Use this address for payment details"
+            name="pincode"
+            label="Pincode"
+            type="tel"
+            id="pincode"
+            autoComplete="pincode"
+            defaultValue={logData.pincode}
           />
         </Grid>
       </Grid>
+      
     </React.Fragment>
-  );
+  )
 }

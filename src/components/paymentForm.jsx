@@ -22,6 +22,7 @@ export default function PaymentForm() {
               fullWidth
               autoComplete="cc-name"
               variant="standard"
+              defaultValue={'G Pavithran'}
             />
           </Grid>
           <Grid item xs={12} md={6}>
@@ -32,6 +33,7 @@ export default function PaymentForm() {
               fullWidth
               autoComplete="cc-number"
               variant="standard"
+              defaultValue={'6439 7323 0259 3620'}
             />
           </Grid>
           <Grid item xs={12} md={6}>
@@ -42,6 +44,7 @@ export default function PaymentForm() {
               fullWidth
               autoComplete="cc-exp"
               variant="standard"
+              defaultValue={'12/24'}
             />
           </Grid>
           <Grid item xs={12} md={6}>
@@ -53,6 +56,7 @@ export default function PaymentForm() {
               fullWidth
               autoComplete="cc-csc"
               variant="standard"
+              defaultValue={'381'}
             />
           </Grid>
           <Grid item xs={12}>
